@@ -2,7 +2,8 @@
 
 // Circular Left Shift (Rotate Left)
 void circular_left_shift(byte *byte_word) {
-    // Fill this function
+    byte* q = (byte*)byte_word;
+    *q = (*q >> 8) | ((*q & 0xff) << 24);
 }
 
 // Add Round Constant
@@ -24,7 +25,7 @@ byte *g_function(byte *byte_word)
 byte *get_round_key(byte *key_bytes, unsigned char round_number) {
     byte *round_key = new byte[16];
     // Fill this function
-    // Note: Don't forget to delete the return og the g_function once you are done using it
+    // Note: Don't forget to delete the return of the g_function once you are done using it
     return round_key;
 }
 
