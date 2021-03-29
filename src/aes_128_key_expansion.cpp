@@ -8,7 +8,7 @@ void circular_left_shift(byte *byte_word) {
 
 // Add Round Constant
 void add_round_constant(byte *byte_word, unsigned char round_number) {
-    // Fill this function
+    byte_word[0] ^= Rcon[round_number];
 }
 
 
