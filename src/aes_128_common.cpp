@@ -45,8 +45,7 @@ int i;
 
 // S-box ( Substitute a single byte )
 byte substitute_byte(byte byte_to_substitute) {
-    
-    byte sbox[256] = {
+  byte sbox[256] = {
     0x63, 0x7c, 0x77, 0x7b, 0xf2, 0x6b, 0x6f, 0xc5,
     0x30, 0x01, 0x67, 0x2b, 0xfe, 0xd7, 0xab, 0x76,
     0xca, 0x82, 0xc9, 0x7d, 0xfa, 0x59, 0x47, 0xf0,
@@ -81,6 +80,8 @@ byte substitute_byte(byte byte_to_substitute) {
     0x41, 0x99, 0x2d, 0x0f, 0xb0, 0x54, 0xbb, 0x16
   };
     return sbox[byte_to_substitute];
+
+    
 }
 
 // substitute the bytes of the state array
@@ -93,3 +94,4 @@ void substitute_bytes(byte *byte_array) {
     byte_array[i] = substitute_byte(t);
   }
 }
+

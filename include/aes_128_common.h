@@ -1,6 +1,4 @@
 #include <iostream>
-// #include <string>
-// using namespace std;
 
 #ifndef AES_128_COMMON_H
 #define AES_128_COMMON_H
