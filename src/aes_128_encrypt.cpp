@@ -1,15 +1,26 @@
 #include "../include/aes_128_encrypt.h"
+#include "../include/aes_128_key_expansion.h"
 
 // Encryption function
-byte *encrypt_aes_128(byte *plaintext, byte *key) {
-    byte *ciphertext = NULL;
+void encrypt_aes_128(byte* plaintext, byte* key) {
     int Nr = 9;
+
     byte roundKeys[176];
+    get_round_keys(key, roundKeys);
+
+    add_round_key(plaintext, key);
+    for (int i = 0; i < Nr; i++)
+    {
+        substitute_bytes(plaintext);
+        shift_rows(plaintext);
+        mix_columns(plaintext);
+        add_round_key(plaintext, roundKeys + (16 * (i + 1)));
+    }
     
-       
-
-
-    return ciphertext;
+    substitute_bytes(plaintext);
+    shift_rows(plaintext);
+    add_round_key(plaintext, roundKeys + 160);
+    
 }
 
 // Shift rows

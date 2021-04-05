@@ -3,7 +3,7 @@
 #ifndef AES_128_ENCRYPT_H
 #define AES_128_ENCRYPT_H
 
-byte *encrypt_aes_128(byte *plaintext, byte *key);
+void encrypt_aes_128(byte* plaintext, byte* key);
 
 void shift_rows(byte *byte_array);
 

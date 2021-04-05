@@ -1,5 +1,4 @@
 #include "../include/aes_128_common.h"
-//#include <string>
 using namespace std;
 
 // Create Byte Array From String
