@@ -35,8 +35,7 @@ void newline() {
 
 // Add round key
 void add_round_key(byte *byte_array, byte *roundKey) {
-int i;
-  for (i = 0; i < 16; i++)
+  for (int i = 0; i < 16; i++)
   {
    byte_array[i] = byte_array[i] ^ roundKey[i];
   }
@@ -79,8 +78,6 @@ byte substitute_byte(byte byte_to_substitute) {
     0x41, 0x99, 0x2d, 0x0f, 0xb0, 0x54, 0xbb, 0x16
   };
     return sbox[byte_to_substitute];
-
-    
 }
 
 // substitute the bytes of the state array

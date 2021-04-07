@@ -10,7 +10,7 @@ int main() {
 
     byte *key = string_to_byte_array("FLORIDAPOLYUNIV");
     byte *plaintext_block = string_to_byte_array("AES-128 is great!");
-    byte *ciphertext = NULL;
+    byte *ciphertext = string_to_byte_array("Initialized");
 
     newline();
     cout << "Key: ";
@@ -23,10 +23,9 @@ int main() {
 
     newline();
     print_byte_array(plaintext_block, 16);
-    encrypt_aes_128(plaintext_block, key);
-    // for (int i = 0; i < 16; i++){
-    //      ciphertext[i] = plaintext_block[i];
-    // }
+    encrypt_aes_128(plaintext_block, key, ciphertext);
+    print_byte_array(ciphertext, 16);
+    decrypt_aes_128(ciphertext, key, plaintext_block);
     print_byte_array(plaintext_block, 16);
     // byte *tmp = string_to_byte_array("FOUR");
     // print_byte_array(tmp, 4);

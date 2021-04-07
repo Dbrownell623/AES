@@ -1,60 +1,7 @@
 #include "../include/aes_128_encrypt.h"
 #include "../include/aes_128_key_expansion.h"
 
-// Encryption function
-void encrypt_aes_128(byte* plaintext, byte* key) {
-    int Nr = 9;
-
-    byte roundKeys[176];
-    get_round_keys(key, roundKeys);
-
-    add_round_key(plaintext, key);
-    for (int i = 0; i < Nr; i++)
-    {
-        substitute_bytes(plaintext);
-        shift_rows(plaintext);
-        mix_columns(plaintext);
-        add_round_key(plaintext, roundKeys + (16 * (i + 1)));
-    }
-    
-    substitute_bytes(plaintext);
-    shift_rows(plaintext);
-    add_round_key(plaintext, roundKeys + 160);
-    
-}
-
-// Shift rows
-void shift_rows(byte *byte_array) {
-
-    byte tmp[16];
-
-    tmp[0] = byte_array[0];
-    tmp[1] = byte_array[5];
-    tmp[2] = byte_array[10];
-    tmp[3] = byte_array[15];
-    tmp[4] = byte_array[4];
-    tmp[5] = byte_array[9];
-    tmp[6] = byte_array[14];
-    tmp[7] = byte_array[3];
-    tmp[8] = byte_array[8];
-    tmp[9] = byte_array[13];
-    tmp[10] = byte_array[2];
-    tmp[11] = byte_array[7];
-    tmp[12] = byte_array[12];
-    tmp[13] = byte_array[1];
-    tmp[14] = byte_array[6];
-    tmp[15] = byte_array[11];
-
-    for (int i = 0; i < 16; i++){
-        byte_array[i] = tmp[i];
-    }
-}
-
-// Mix Columns
-void mix_columns(byte *array) {
-    byte tmp[16];
-
-    //Byte Multiplication by 2
+//Byte Multiplication by 2
     byte mul2[] ={
     0x00,0x02,0x04,0x06,0x08,0x0a,0x0c,0x0e,0x10,0x12,0x14,0x16,0x18,0x1a,0x1c,0x1e,
     0x20,0x22,0x24,0x26,0x28,0x2a,0x2c,0x2e,0x30,0x32,0x34,0x36,0x38,0x3a,0x3c,0x3e,
@@ -92,6 +39,62 @@ void mix_columns(byte *array) {
     0x3b,0x38,0x3d,0x3e,0x37,0x34,0x31,0x32,0x23,0x20,0x25,0x26,0x2f,0x2c,0x29,0x2a,
     0x0b,0x08,0x0d,0x0e,0x07,0x04,0x01,0x02,0x13,0x10,0x15,0x16,0x1f,0x1c,0x19,0x1a
     };
+
+// Encryption function
+void encrypt_aes_128(byte* plaintext, byte* key, byte* ciphertext) {
+    int Nr = 9;
+
+    byte roundKeys[176];
+    get_round_keys(key, roundKeys);
+
+    add_round_key(plaintext, key);
+    for (int i = 0; i < Nr; i++)
+    {
+        substitute_bytes(plaintext);
+        shift_rows(plaintext);
+        mix_columns(plaintext);
+        add_round_key(plaintext, roundKeys + (16 * (i + 1)));
+    }
+    
+    substitute_bytes(plaintext);
+    shift_rows(plaintext);
+    add_round_key(plaintext, roundKeys + 160);
+
+    for (int i = 0; i < 16; i++){
+         ciphertext[i] = plaintext[i];
+    }
+}
+
+// Shift rows
+void shift_rows(byte *byte_array) {
+
+    byte tmp[16];
+
+    tmp[0] = byte_array[0];
+    tmp[1] = byte_array[5];
+    tmp[2] = byte_array[10];
+    tmp[3] = byte_array[15];
+    tmp[4] = byte_array[4];
+    tmp[5] = byte_array[9];
+    tmp[6] = byte_array[14];
+    tmp[7] = byte_array[3];
+    tmp[8] = byte_array[8];
+    tmp[9] = byte_array[13];
+    tmp[10] = byte_array[2];
+    tmp[11] = byte_array[7];
+    tmp[12] = byte_array[12];
+    tmp[13] = byte_array[1];
+    tmp[14] = byte_array[6];
+    tmp[15] = byte_array[11];
+
+    for (int i = 0; i < 16; i++){
+        byte_array[i] = tmp[i];
+    }
+}
+
+// Mix Columns
+void mix_columns(byte *array) {
+    byte tmp[16];
 
     tmp[0] = (byte)(mul2[array[0]] ^ mul3[array[1]] ^ array[2] ^ array[3]);
     tmp[1] = (byte)(array[0] ^ mul2[array[1]] ^ mul3[array[2]] ^ array[3]);
